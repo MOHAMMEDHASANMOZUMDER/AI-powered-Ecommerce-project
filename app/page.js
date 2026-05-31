@@ -10,6 +10,17 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState("default");
   
+  // Chatbot states
+  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [chatMessages, setChatMessages] = useState([
+    { 
+      sender: "bot", 
+      text: "👋 Hello! I am your NexusStore Assistant. Ask me to recommend products, track your orders (try tracking `NEX-883192`), or inquire about our store policies and FAQs!" 
+    }
+  ]);
+  const [chatInput, setChatInput] = useState("");
+  const [chatLoading, setChatLoading] = useState(false);
+  
   const { addToCart, toast } = useCart();
 
   useEffect(() => {
@@ -50,6 +61,54 @@ export default function Home() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const sendChatMessage = async (textToSend) => {
+    const text = textToSend || chatInput;
+    if (!text || text.trim() === "") return;
+    
+    // Add user message
+    const userMsg = { sender: "user", text };
+    setChatMessages((prev) => [...prev, userMsg]);
+    if (!textToSend) setChatInput("");
+    setChatLoading(true);
+    
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text }),
+      });
+      const data = await response.json();
+      
+      setChatMessages((prev) => [
+        ...prev,
+        { sender: "bot", text: data.reply, products: data.products }
+      ]);
+    } catch (error) {
+      console.error("Chatbot communication error:", error);
+      setChatMessages((prev) => [
+        ...prev,
+        { sender: "bot", text: "⚠️ Sorry, I am having trouble connecting to my brain right now! Please try again in a moment." }
+      ]);
+    } finally {
+      setChatLoading(false);
+    }
+  };
+
+  const formatMessageText = (text) => {
+    if (!text) return "";
+    // Regex split by bold patterns **word** and code blocks `code`
+    const parts = text.split(/(\*\*.*?\*\*|`.*?`)/g);
+    return parts.map((part, index) => {
+      if (part.startsWith("**") && part.endsWith("**")) {
+        return <strong key={index} className="font-bold text-zinc-900 dark:text-white">{part.slice(2, -2)}</strong>;
+      }
+      if (part.startsWith("`") && part.endsWith("`")) {
+        return <code key={index} className="bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 px-1.5 py-0.5 rounded text-[11px] font-mono border border-indigo-100 dark:border-indigo-900/30">{part.slice(1, -1)}</code>;
+      }
+      return part;
+    });
   };
 
   // Get dynamic categories list with count
@@ -378,9 +437,188 @@ export default function Home() {
         </div>
       </footer>
 
+      {/* Floating Chat Assistant */}
+      <div className="fixed bottom-6 right-6 z-40 flex flex-col items-end">
+        {/* Chat Window */}
+        {isChatOpen && (
+          <div className="mb-4 w-92 max-w-[calc(100vw-2rem)] h-[500px] bg-white/95 dark:bg-zinc-950/98 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden backdrop-blur-md animate-fade-in transition-all duration-300">
+            {/* Header */}
+            <div className="p-4 bg-gradient-to-r from-indigo-600 to-violet-600 text-white flex items-center justify-between shadow-md">
+              <div className="flex items-center gap-2">
+                <div className="p-1.5 bg-white/10 rounded-lg">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                  </svg>
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold leading-none">Nexus Assistant</h4>
+                  <span className="text-[10px] opacity-75">AI Customer Service & Sales</span>
+                </div>
+              </div>
+              <button 
+                onClick={() => setIsChatOpen(false)}
+                className="p-1 hover:bg-white/10 rounded-lg transition-colors cursor-pointer"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Messages */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 no-scrollbar">
+              {chatMessages.map((msg, index) => (
+                <div 
+                  key={index} 
+                  className={`flex gap-2.5 ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
+                >
+                  {msg.sender === "bot" && (
+                    <div className="w-7 h-7 rounded-lg bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0 border border-indigo-100 dark:border-indigo-900/30">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                      </svg>
+                    </div>
+                  )}
+                  
+                  <div className="flex flex-col gap-1.5 max-w-[80%]">
+                    <div className={`p-3 rounded-2xl text-xs leading-relaxed whitespace-pre-line shadow-sm border ${
+                      msg.sender === "user" 
+                        ? "bg-indigo-600 border-indigo-700 text-white rounded-tr-none" 
+                        : "bg-zinc-50 dark:bg-zinc-900 border-zinc-150 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-tl-none"
+                    }`}>
+                      {formatMessageText(msg.text)}
+                    </div>
+                    
+                    {/* Inline Products Showcase */}
+                    {msg.products && msg.products.length > 0 && (
+                      <div className="grid grid-cols-1 gap-2 mt-1">
+                        {msg.products.map((prod) => (
+                          <div 
+                            key={prod._id}
+                            className="flex items-center gap-3 p-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl hover:border-indigo-500 transition-colors"
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img 
+                              src={prod.image || "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=400"} 
+                              alt={prod.title}
+                              className="w-12 h-12 object-cover rounded-lg bg-zinc-50 dark:bg-zinc-950 border border-zinc-150 dark:border-zinc-900"
+                            />
+                            <div className="flex-1 min-w-0">
+                              <h5 className="text-[11px] font-bold text-zinc-900 dark:text-white truncate">{prod.title}</h5>
+                              <span className="text-[11px] font-extrabold text-indigo-600 dark:text-indigo-400">{prod.price.toFixed(0)} TK</span>
+                            </div>
+                            <button 
+                              onClick={() => {
+                                addToCart(prod);
+                                toast(`Added "${prod.title}" to cart from chat!`);
+                              }}
+                              className="px-2.5 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-bold rounded-lg transition-colors cursor-pointer"
+                            >
+                              Add
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+              
+              {/* Typing Indicator */}
+              {chatLoading && (
+                <div className="flex gap-2.5 justify-start">
+                  <div className="w-7 h-7 rounded-lg bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0 border border-indigo-100 dark:border-indigo-900/30">
+                    <svg className="w-4 h-4 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89" />
+                    </svg>
+                  </div>
+                  <div className="p-3 bg-zinc-50 dark:bg-zinc-900 border border-zinc-150 dark:border-zinc-800 rounded-2xl rounded-tl-none shadow-sm flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce" />
+                    <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce [animation-delay:0.2s]" />
+                    <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-bounce [animation-delay:0.4s]" />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Quick Suggestions */}
+            {chatMessages.length === 1 && !chatLoading && (
+              <div className="px-4 pb-2 pt-1 flex flex-wrap gap-1.5 shrink-0 bg-transparent">
+                <button 
+                  onClick={() => sendChatMessage("Show me gaming keyboards")}
+                  className="px-2.5 py-1 border border-indigo-100 dark:border-indigo-900/50 bg-indigo-50/20 dark:bg-indigo-950/10 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-500 hover:text-white dark:hover:bg-indigo-900 dark:hover:text-white rounded-lg text-[10px] font-semibold transition-all cursor-pointer"
+                >
+                  🎮 Gaming gear
+                </button>
+                <button 
+                  onClick={() => sendChatMessage("Track order NEX-883192")}
+                  className="px-2.5 py-1 border border-indigo-100 dark:border-indigo-900/50 bg-indigo-50/20 dark:bg-indigo-950/10 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-500 hover:text-white dark:hover:bg-indigo-900 dark:hover:text-white rounded-lg text-[10px] font-semibold transition-all cursor-pointer"
+                >
+                  📦 Track NEX-883192
+                </button>
+                <button 
+                  onClick={() => sendChatMessage("What is your refund policy?")}
+                  className="px-2.5 py-1 border border-indigo-100 dark:border-indigo-900/50 bg-indigo-50/20 dark:bg-indigo-950/10 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-500 hover:text-white dark:hover:bg-indigo-900 dark:hover:text-white rounded-lg text-[10px] font-semibold transition-all cursor-pointer"
+                >
+                  🔄 Refund Policy
+                </button>
+              </div>
+            )}
+
+            {/* Input Form */}
+            <form 
+              onSubmit={(e) => {
+                e.preventDefault();
+                sendChatMessage();
+              }}
+              className="p-3 bg-zinc-50 dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800 flex gap-2"
+            >
+              <input 
+                type="text"
+                placeholder="Ask me anything..."
+                value={chatInput}
+                onChange={(e) => setChatInput(e.target.value)}
+                disabled={chatLoading}
+                className="flex-1 bg-white dark:bg-zinc-900 border border-zinc-250 dark:border-zinc-850 rounded-xl px-3.5 py-2 text-xs focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 disabled:opacity-50"
+              />
+              <button 
+                type="submit"
+                disabled={chatLoading || !chatInput.trim()}
+                className="px-3 bg-indigo-600 hover:bg-indigo-500 disabled:bg-zinc-300 dark:disabled:bg-zinc-800 text-white rounded-xl shadow-md transition-all flex items-center justify-center cursor-pointer shrink-0"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </button>
+            </form>
+          </div>
+        )}
+
+        {/* Toggle Button */}
+        <button 
+          onClick={() => setIsChatOpen(!isChatOpen)}
+          className="p-4 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white rounded-full shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer flex items-center justify-center group relative"
+        >
+          {isChatOpen ? (
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+            </svg>
+          ) : (
+            <>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+              </svg>
+              {/* Unread notification ping */}
+              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-rose-500 border-2 border-white dark:border-zinc-950 rounded-full animate-ping animate-duration-1000" />
+              <span className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-rose-500 border-2 border-white dark:border-zinc-950 rounded-full" />
+            </>
+          )}
+        </button>
+      </div>
+
       {/* Floating Success Toast */}
       {toast && (
-        <div className="fixed bottom-6 right-6 z-50 animate-bounce">
+        <div className="fixed bottom-24 right-6 z-50 animate-bounce">
           <div className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-white dark:bg-zinc-900 border border-indigo-500 text-zinc-900 dark:text-zinc-100 shadow-2xl shadow-indigo-500/10 dark:shadow-indigo-950/40">
             <div className="h-6 w-6 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
