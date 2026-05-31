@@ -24,8 +24,12 @@ export default function Navbar() {
     }
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+    } catch (error) {
+      console.error("Failed to call logout API:", error);
+    }
     localStorage.removeItem("user");
     setUser(null);
     window.location.reload();
@@ -125,10 +129,22 @@ export default function Navbar() {
 
           {/* Dynamic Desktop User Auth */}
           {user ? (
-            <div className="flex items-center gap-2 border-l border-zinc-200 dark:border-zinc-800 pl-3">
-              <span className="hidden lg:inline text-xs font-bold text-zinc-700 dark:text-zinc-300">
-                Hi, {user.name.split(" ")[0]}
-              </span>
+            <div className="flex items-center gap-3 border-l border-zinc-200 dark:border-zinc-800 pl-3">
+              <Link
+                href="/auth"
+                className="hidden lg:flex items-center gap-1 text-xs font-extrabold text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 transition-colors"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                Hi, {user.name.split(" ")[0]} (Dashboard)
+              </Link>
+              <Link
+                href="/auth"
+                className="lg:hidden text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-500"
+              >
+                Dashboard
+              </Link>
               <button
                 onClick={handleLogout}
                 className="px-3 py-1.5 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-rose-500 text-xs font-bold rounded-xl transition-all cursor-pointer active:scale-95 border border-zinc-200/50 dark:border-zinc-850"
@@ -171,12 +187,21 @@ export default function Navbar() {
 
         {/* Dynamic Mobile Auth Button */}
         {user ? (
-          <button
-            onClick={handleLogout}
-            className="px-3 py-1 text-xs font-semibold text-rose-500 rounded-lg active:scale-95"
-          >
-            Logout ({user.name.split(" ")[0]})
-          </button>
+          <div className="flex items-center gap-1.5 pl-1.5 border-l border-zinc-200 dark:border-zinc-850">
+            <Link
+              href="/auth"
+              className="px-2 py-1 text-xs font-bold text-indigo-600 dark:text-indigo-400"
+            >
+              Dashboard
+            </Link>
+            <span className="text-[10px] text-zinc-300 dark:text-zinc-700">|</span>
+            <button
+              onClick={handleLogout}
+              className="px-2 py-1 text-xs font-semibold text-rose-500 rounded-lg active:scale-95"
+            >
+              Logout
+            </button>
+          </div>
         ) : (
           <Link
             href="/auth"

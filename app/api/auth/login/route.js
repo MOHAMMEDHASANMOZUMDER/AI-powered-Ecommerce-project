@@ -2,6 +2,7 @@ import connectDB from "@/app/db";
 import User from "@/models/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 
 export async function POST(request) {
     try {
@@ -48,10 +49,19 @@ export async function POST(request) {
             { expiresIn: "7d" }
         );
 
-        // 5. Respond with token and user details
+        // 5. Set HttpOnly JWT Cookie (Production Best Practice)
+        const cookieStore = await cookies();
+        cookieStore.set("token", token, {
+            httpOnly: true,                               // Shield token from XSS attacks
+            secure: process.env.NODE_ENV === "production", // Only transport over HTTPS in production
+            sameSite: "strict",                           // Defend against CSRF requests
+            maxAge: 7 * 24 * 60 * 60,                     // 7 days expiration
+            path: "/"
+        });
+
+        // 6. Respond with user details (Frontend can store these public details in state)
         return Response.json({
             message: "Login successful!",
-            token,
             user: {
                 id: user._id,
                 name: user.name,

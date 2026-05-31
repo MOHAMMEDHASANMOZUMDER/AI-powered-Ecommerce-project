@@ -2,6 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import connectDB from "@/app/db";
 import Product from "@/models/product";
 import Order from "@/models/order";
+import { verifyAuth } from "@/app/api/auth/helper";
 
 let ai;
 let embeddingModel;
@@ -52,10 +53,10 @@ export async function POST(request) {
         const lowercaseMessage = message.toLowerCase();
         
         // ==========================================
-        // INTENT 1: ORDER TRACKING
+        // INTENT 1: ORDER TRACKING (WITH ACTIVE SESSION RESOLVER)
         // ==========================================
         const orderNumberMatch = message.match(/(NEX-\d+|ORD\d+)/i);
-        const isTrackingQuery = lowercaseMessage.includes("track") || lowercaseMessage.includes("status") || orderNumberMatch;
+        const isTrackingQuery = lowercaseMessage.includes("track") || lowercaseMessage.includes("status") || lowercaseMessage.includes("order") || orderNumberMatch;
         
         if (isTrackingQuery) {
             if (orderNumberMatch) {
@@ -67,7 +68,7 @@ export async function POST(request) {
                     const reply = `🔍 **Order Found!**\n\n` +
                                   `**Order Number:** \`${order.orderNumber}\`\n` +
                                   `**Status:** \`${order.status.toUpperCase()}\`\n` +
-                                  `**Total:** **${order.total.toFixed(0)} TK**\n\n` +
+                                  `**Total:** **${order.total.toLocaleString()} TK**\n\n` +
                                   `**Items:**\n${itemsList}\n\n` +
                                   `**Shipping Address:**\n` +
                                   `${order.shippingAddress.name}, ${order.shippingAddress.phone}\n` +
@@ -80,8 +81,30 @@ export async function POST(request) {
                     });
                 }
             } else {
+                // If they don't provide a specific order number, check if they are logged in!
+                const activeUser = await verifyAuth();
+                if (activeUser) {
+                    const userOrders = await Order.find({ user: activeUser.userId }).sort({ createdAt: -1 }).limit(3);
+                    if (userOrders.length > 0) {
+                        let ordersSummary = `👋 **Hi ${activeUser.name}!** I found your recent order history in our database:\n\n`;
+                        userOrders.forEach((order, idx) => {
+                            const dateStr = new Date(order.createdAt).toLocaleDateString(undefined, { month: "short", day: "numeric" });
+                            ordersSummary += `${idx + 1}. **Order #${order.orderNumber}** placed on *${dateStr}*\n` +
+                                             `   • **Status:** \`${order.status.toUpperCase()}\`\n` +
+                                             `   • **Total:** **${order.total.toLocaleString()} TK**\n` +
+                                             `   • **Items:** ${order.items.map(i => i.title).join(", ")}\n\n`;
+                        });
+                        ordersSummary += `You can see complete order details and print invoices at any time inside your **[Account Dashboard](/auth)**! Let me know if you have questions about a specific order!`;
+                        return Response.json({ reply: ordersSummary });
+                    } else {
+                        return Response.json({ 
+                            reply: `👋 **Hi ${activeUser.name}!** I looked up your account, but you haven't placed any orders with us yet! Feel free to search our product catalog or ask me for shopping recommendations.` 
+                        });
+                    }
+                }
+
                 return Response.json({ 
-                    reply: "It looks like you want to track an order! Please provide your order number (for example, `NEX-883192`) so I can look up its status in our database." 
+                    reply: "It looks like you want to track an order! Please provide your order number (for example, `NEX-883192`) or **[sign in to your account](/auth)** so I can list your orders automatically!" 
                 });
             }
         }

@@ -7,6 +7,11 @@ const OrderSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: false, // Optional for guest checkouts
+    },
     shippingAddress: {
       name: { type: String, required: true },
       phone: { type: String, required: true },
