@@ -1,11 +1,35 @@
 import connectDB from "@/app/db"; // Corrected to app/db
 import Product from "@/models/product";
+import Order from "@/models/order";
+import {GoogleGenerativeAI} from "@google/generative-ai";
+
+let ai;
+let embeddingModel;
+
+function getEmbeddingModel() {
+    if (!embeddingModel) {
+        if (!process.env.GEMINI_API_KEY) {
+            throw new Error("GEMINI_API_KEY is not defined in environment variables");
+        }
+        ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+        embeddingModel = ai.getGenerativeModel({ model: "gemini-embedding-2" });
+    }
+    return embeddingModel;
+}
+
+async function generateEmbedding(text){
+    const model = getEmbeddingModel();
+    const result = await model.embedContent(text);
+    return result.embedding.values;
+}
+
 
 export const GET = async () => {
-    await connectDB();
-    await Product.deleteMany({});
-    
-    await Product.insertMany([
+    try {
+        await connectDB();
+        await Product.deleteMany({});
+        await Order.deleteMany({});
+        const products= [
         {
     title: "Gaming Mouse",
     description: "Ergonomic gaming mouse with customizable RGB lighting.",
@@ -223,7 +247,88 @@ export const GET = async () => {
     category: "Electronics",
     image: "https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=400",
 },
+    ]
+    const productsWithVectors= await Promise.all(products.map(async(product)=>{
+        const embedding= await generateEmbedding(`${product.title}\n${product.description}\n${product.category}`);
+        return {...product, embedding};
+    }));
+    
+    const seededProducts = await Product.insertMany(productsWithVectors);
+
+
+    // Seed mock Orders using references to our newly created products
+    const mouse = seededProducts[0];
+    const keyboard = seededProducts[1];
+    const stand = seededProducts[2];
+
+    await Order.insertMany([
+      {
+        orderNumber: "NEX-883192",
+        shippingAddress: {
+          name: "Alice Johnson",
+          phone: "01712345678",
+          email: "alice@example.com",
+          address: "House 12, Road 5, Banani",
+          city: "Dhaka",
+          zip: "1213",
+        },
+        paymentMethod: "stripe",
+        paymentDetails: {
+          cardHolder: "ALICE JOHNSON",
+          cardNumberLast4: "4242",
+        },
+        items: [
+          {
+            product: mouse._id,
+            title: mouse.title,
+            quantity: 1,
+            priceAtPurchase: mouse.price,
+          },
+          {
+            product: keyboard._id,
+            title: keyboard.title,
+            quantity: 1,
+            priceAtPurchase: keyboard.price,
+          },
+        ],
+        subtotal: mouse.price + keyboard.price,
+        tax: 0,
+        total: mouse.price + keyboard.price,
+        status: "completed",
+      },
+      {
+        orderNumber: "NEX-992187",
+        shippingAddress: {
+          name: "Rahman Khan",
+          phone: "01999887766",
+          email: "rahman@example.com",
+          address: "Flat 4B, Dhanmondi",
+          city: "Dhaka",
+          zip: "1209",
+        },
+        paymentMethod: "bkash",
+        paymentDetails: {
+          senderNumber: "01999887766",
+          transactionId: "BK8877X992",
+        },
+        items: [
+          {
+            product: stand._id,
+            title: stand.title,
+            quantity: 2,
+            priceAtPurchase: stand.price,
+          },
+        ],
+        subtotal: stand.price * 2,
+        tax: 0,
+        total: stand.price * 2,
+        status: "processing",
+      },
     ]);
 
-    return Response.json({message: `Products seeded successfully`});
+        return Response.json({message: `Products and Orders seeded successfully`});
+    } catch (error) {
+        console.error("Seeding Error:", error);
+        return Response.json({ error: error.message || error, stack: error.stack }, { status: 500 });
+    }
 }

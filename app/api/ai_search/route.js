@@ -13,32 +13,96 @@ export async function POST(request) {
         if (!query || query.trim() === "") {
             return Response.json({ products: [] });
         }
-
-        const model = client.getGenerativeModel({ model: "gemini-3.5-flash" });
-        const aiRes = await model.generateContent(
-            `Convert the following user search query into a single simplified product search keyword. Return ONLY the search keyword, with no extra explanation, punctuation, or text:\n\nUser Query: "${query}"`
-        );
-        const keywords = aiRes.response.text()
-            .replace(/["'**`]/g, "")
-            .trim();
+         await connectDB();
+        let ai;
+        let embeddingModel;
         
-        await connectDB();
+        function getEmbeddingModel() {
+            if (!embeddingModel) {
+                if (!process.env.GEMINI_API_KEY) {
+                    throw new Error("GEMINI_API_KEY is not defined in environment variables");
+                }
+                ai = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+                embeddingModel = ai.getGenerativeModel({ model: "gemini-embedding-2" });
+            }
+            return embeddingModel;
+        }
+     async function generateEmbedding(text){
+    const model = getEmbeddingModel();
+    const result = await model.embedContent(text);
+    return result.embedding.values;
+}
+        const queryEmbedding = await generateEmbedding(query);
+        const allProducts = await Product.find({});
+        //aproach 1: using ai embedding
+      //  const productsWithSimilarity = allProducts.map((product) => {
+           // const productEmbedding = product.embedding;
+            
+//             if (!productEmbedding || productEmbedding.length === 0) {
+//                 return {
+//                     ...product.toObject(),
+//                     cosineSimilarity: 0
+//                 };
+//             }
+//             let dotProduct = 0;
+//             let querySqSum = 0;
+//             let productSqSum = 0;
+            
+//             const len = Math.min(queryEmbedding.length, productEmbedding.length);
+//             for (let i = 0; i < len; i++) {
+//                 const qVal = queryEmbedding[i];
+//                 const pVal = productEmbedding[i];
+//                 dotProduct += qVal * pVal;
+//                 querySqSum += qVal * qVal;
+//                 productSqSum += pVal * pVal;
+//             }
+            
+//             const qMagnitude = Math.sqrt(querySqSum);
+//             const pMagnitude = Math.sqrt(productSqSum);
+            
+//             const cosineSimilarity = (qMagnitude && pMagnitude)
+//                 ? dotProduct / (qMagnitude * pMagnitude)
+//                 : 0;
+            
+//             return {
+//                 ...product.toObject(),
+//                 cosineSimilarity
+//             };
+//         });
+//         productsWithSimilarity.sort((a, b) => b.cosineSimilarity - a.cosineSimilarity);
+//         const relevantProducts = productsWithSimilarity.filter((product) => product.cosineSimilarity > 0.2);
+//         console.log(relevantProducts)
+//aproach 2: using vector search
+const startTime= Date.now();
+const results= await Product.aggregate([
+    {
+       $vectorSearch: {
+            index: "vector_index",
+            queryVector: queryEmbedding,
+            path: "embedding",
+            numCandidates: 50,
+            limit: 10,
+            similarityFunction: "cosine"
+        } 
+    },
+    {$project: {
+        title:1,
+        description:1,
+        price:1,
+        category:1,
+        image:1,
+        score: { $meta: "vectorSearchScore" }
+    }
+}
+]);
+console.log(results)
+const endTime= Date.now();
+console.log("Time taken:", endTime-startTime);
         
-        
-        const products = await Product.find({
-            $or: [
-                // Match AI-extracted keywords
-                { title: { $regex: keywords, $options: "i" } },
-                { description: { $regex: keywords, $options: "i" } },
-                // Match original user query as fallback
-                { title: { $regex: query, $options: "i" } },
-                { description: { $regex: query, $options: "i" } }
-            ]
-        });
-
-        return Response.json({ products });
+        return Response.json({ products:results });
     } catch (error) {
         console.error("AI Search API Error:", error);
         return Response.json({ error: "Failed to perform AI search", products: [] }, { status: 500 });
     }
 }
+

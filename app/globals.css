@@ -1,8 +1,16 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f8fafc; /* Slate-50 background for clean Light Mode */
+  --foreground: #09090b; /* Zinc-950 text for Light Mode */
+}
+
+/* If .dark class is active, override background variables to pitch black dark mode */
+.dark {
+  --background: #09090b;
+  --foreground: #fafafa;
 }
 
 @theme inline {
@@ -10,13 +18,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {

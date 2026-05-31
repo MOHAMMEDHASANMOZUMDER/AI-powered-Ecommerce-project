@@ -5,5 +5,6 @@ const productSchema = new mongoose.Schema({
   price: Number,
   category: String,
   image: String,
+  embedding: [Number],
 })
 export default mongoose.models.Product || mongoose.model("Product", productSchema);
