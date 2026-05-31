@@ -9,14 +9,27 @@ export default function Navbar() {
   const { cartCount } = useCart();
   const pathname = usePathname();
   const [theme, setTheme] = useState("dark"); // Default to dark
+  const [user, setUser] = useState(null);
 
-  // Initialize theme from DOM
+  // Initialize theme and user from DOM/LocalStorage
   useEffect(() => {
     if (typeof window !== "undefined") {
       const isDark = document.documentElement.classList.contains("dark");
       setTheme(isDark ? "dark" : "light");
+      
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
     }
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null);
+    window.location.reload();
+  };
 
   const toggleTheme = () => {
     if (theme === "dark") {
@@ -109,11 +122,36 @@ export default function Navbar() {
               </span>
             )}
           </Link>
+
+          {/* Dynamic Desktop User Auth */}
+          {user ? (
+            <div className="flex items-center gap-2 border-l border-zinc-200 dark:border-zinc-800 pl-3">
+              <span className="hidden lg:inline text-xs font-bold text-zinc-700 dark:text-zinc-300">
+                Hi, {user.name.split(" ")[0]}
+              </span>
+              <button
+                onClick={handleLogout}
+                className="px-3 py-1.5 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-rose-500 text-xs font-bold rounded-xl transition-all cursor-pointer active:scale-95 border border-zinc-200/50 dark:border-zinc-850"
+              >
+                Logout
+              </button>
+            </div>
+          ) : (
+            <Link
+              href="/auth"
+              className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-xl shadow-md transition-all flex items-center gap-1 active:scale-95 cursor-pointer border-none"
+            >
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              Sign In
+            </Link>
+          )}
         </div>
       </div>
 
       {/* Mobile Nav Links Container */}
-      <div className="md:hidden flex items-center justify-center gap-1 py-2 bg-zinc-50/50 dark:bg-zinc-900/30 border-t border-zinc-200/50 dark:border-zinc-800/50">
+      <div className="md:hidden flex items-center justify-center gap-1.5 py-2 bg-zinc-50/50 dark:bg-zinc-900/30 border-t border-zinc-200/50 dark:border-zinc-800/50">
         {navLinks.map((link) => {
           const isActive = pathname === link.path;
           return (
@@ -130,6 +168,23 @@ export default function Navbar() {
             </Link>
           );
         })}
+
+        {/* Dynamic Mobile Auth Button */}
+        {user ? (
+          <button
+            onClick={handleLogout}
+            className="px-3 py-1 text-xs font-semibold text-rose-500 rounded-lg active:scale-95"
+          >
+            Logout ({user.name.split(" ")[0]})
+          </button>
+        ) : (
+          <Link
+            href="/auth"
+            className="px-3 py-1 text-xs font-semibold text-indigo-600 dark:text-indigo-400"
+          >
+            Sign In
+          </Link>
+        )}
       </div>
     </header>
   );
