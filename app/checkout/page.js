@@ -195,7 +195,7 @@ export default function Checkout() {
             </p>
             <Link
               href="/"
-              className="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm rounded-xl shadow-lg shadow-indigo-600/10 hover:shadow-indigo-600/20 active:scale-95 transition-all duration-200 flex items-center gap-2"
+              className="px-6 py-3 bg-electric-600 hover:bg-electric-500 text-white font-semibold text-sm rounded-xl shadow-lg shadow-electric-600/10 hover:shadow-electric-600/20 active:scale-95 transition-all duration-200 flex items-center gap-2"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -295,7 +295,7 @@ export default function Checkout() {
                   </div>
                   <div className="flex justify-between text-zinc-500">
                     <span>Express Shipping</span>
-                    <span className="font-semibold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider text-[10px] bg-indigo-500/10 px-2 py-0.5 rounded-full border border-indigo-500/20">
+                    <span className="font-semibold text-electric-600 dark:text-electric-400 uppercase tracking-wider text-[10px] bg-electric-500/10 px-2 py-0.5 rounded-full border border-electric-500/20">
                       Free
                     </span>
                   </div>
@@ -325,7 +325,7 @@ export default function Checkout() {
                     value={formData.name}
                     onChange={handleFormChange}
                     placeholder="John Doe"
-                    className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200"
+                    className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-electric-500 focus:ring-1 focus:ring-electric-500 transition-all duration-200 font-medium"
                   />
                 </div>
 
@@ -340,7 +340,7 @@ export default function Checkout() {
                     value={formData.phone}
                     onChange={handleFormChange}
                     placeholder="01XXXXXXXXX"
-                    className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200"
+                    className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-electric-500 focus:ring-1 focus:ring-electric-500 transition-all duration-200 font-medium"
                   />
                 </div>
 
@@ -354,7 +354,7 @@ export default function Checkout() {
                     value={formData.email}
                     onChange={handleFormChange}
                     placeholder="abc@example.com"
-                    className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200"
+                    className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-electric-500 focus:ring-1 focus:ring-electric-500 transition-all duration-200 font-medium"
                   />
                 </div>
 
@@ -369,7 +369,7 @@ export default function Checkout() {
                     value={formData.address}
                     onChange={handleFormChange}
                     placeholder="Road, Area"
-                    className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200"
+                    className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-electric-500 focus:ring-1 focus:ring-electric-500 transition-all duration-200 font-medium"
                   />
                 </div>
 
@@ -385,7 +385,7 @@ export default function Checkout() {
                       value={formData.city}
                       onChange={handleFormChange}
                       placeholder="Dhaka"
-                      className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200"
+                      className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-electric-500 focus:ring-1 focus:ring-electric-500 transition-all duration-200 font-medium"
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
@@ -398,7 +398,7 @@ export default function Checkout() {
                       value={formData.zip}
                       onChange={handleFormChange}
                       placeholder="1207"
-                      className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200"
+                      className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-electric-500 focus:ring-1 focus:ring-electric-500 transition-all duration-200 font-medium"
                     />
                   </div>
                 </div>
@@ -414,7 +414,7 @@ export default function Checkout() {
                       onClick={() => setPaymentMethod("cash_on_delivery")}
                       className={`flex items-center gap-3 p-3.5 rounded-xl border text-left transition-all duration-250 cursor-pointer active:scale-[0.97] ${
                         paymentMethod === "cash_on_delivery"
-                          ? "border-indigo-500 bg-indigo-500/5 text-indigo-600 dark:text-indigo-400"
+                          ? "border-electric-500 bg-electric-500/5 text-electric-600 dark:text-electric-400"
                           : "border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-950/20 text-zinc-700 dark:text-zinc-300"
                       }`}
                     >
@@ -433,7 +433,7 @@ export default function Checkout() {
                       onClick={() => setPaymentMethod("stripe")}
                       className={`flex items-center gap-3 p-3.5 rounded-xl border text-left transition-all duration-250 cursor-pointer active:scale-[0.97] ${
                         paymentMethod === "stripe"
-                          ? "border-indigo-500 bg-indigo-500/5 text-indigo-600 dark:text-indigo-400"
+                          ? "border-electric-500 bg-electric-500/5 text-electric-600 dark:text-electric-400"
                           : "border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 bg-zinc-50/50 dark:bg-zinc-950/20 text-zinc-700 dark:text-zinc-300"
                       }`}
                     >
@@ -494,15 +494,15 @@ export default function Checkout() {
                   <div className="border-t border-zinc-200 dark:border-zinc-800 pt-5 flex flex-col gap-4 animate-fade-in">
                     
                     {/* INTERACTIVE CREDIT CARD VISUAL */}
-                    <div className="relative h-44 w-full rounded-2xl bg-gradient-to-tr from-indigo-600 via-indigo-700 to-violet-600 dark:from-indigo-950/40 dark:via-purple-900/35 dark:to-indigo-900/40 p-5 flex flex-col justify-between text-white shadow-lg border border-indigo-500/20 dark:border-indigo-500/10 backdrop-blur-md overflow-hidden">
-                      <div className="absolute -top-12 -right-12 h-36 w-36 bg-purple-500/20 rounded-full blur-2xl pointer-events-none" />
-                      <div className="absolute -bottom-12 -left-12 h-36 w-36 bg-indigo-500/20 rounded-full blur-2xl pointer-events-none" />
+                    <div className="relative h-44 w-full rounded-2xl bg-gradient-to-tr from-navy-950 via-navy-900 to-electric-600 p-5 flex flex-col justify-between text-white shadow-lg border border-electric-500/20 dark:border-electric-550/10 backdrop-blur-md overflow-hidden">
+                      <div className="absolute -top-12 -right-12 h-36 w-36 bg-ice-500/10 rounded-full blur-2xl pointer-events-none" />
+                      <div className="absolute -bottom-12 -left-12 h-36 w-36 bg-electric-500/20 rounded-full blur-2xl pointer-events-none" />
 
                       <div className="flex justify-between items-center z-10">
                         <div className="h-6 w-9 rounded bg-zinc-200/20 backdrop-blur-md border border-white/10 flex flex-col gap-0.5 p-1">
                           <div className="h-full bg-amber-400/40 rounded-sm w-3/4" />
                         </div>
-                        <span className="text-[9px] font-extrabold tracking-widest text-indigo-200">
+                        <span className="text-[9px] font-extrabold tracking-widest text-ice-200">
                           NEXUS CARD
                         </span>
                       </div>
@@ -513,13 +513,13 @@ export default function Checkout() {
 
                       <div className="flex justify-between items-end z-10 text-xs">
                         <div className="flex flex-col">
-                          <span className="text-[7px] text-indigo-200 uppercase tracking-wider">Card Holder</span>
+                          <span className="text-[7px] text-ice-200 uppercase tracking-wider">Card Holder</span>
                           <span className="font-bold truncate max-w-[170px]">
                             {cardData.name.toUpperCase() || "YOUR FULL NAME"}
                           </span>
                         </div>
                         <div className="flex flex-col text-right">
-                          <span className="text-[7px] text-indigo-200 uppercase tracking-wider">Expires</span>
+                          <span className="text-[7px] text-ice-200 uppercase tracking-wider">Expires</span>
                           <span className="font-bold font-mono">
                             {cardData.expiry || "MM/YY"}
                           </span>
@@ -540,7 +540,7 @@ export default function Checkout() {
                         value={cardData.name}
                         onChange={handleCardChange}
                         placeholder="Johnathan Doe"
-                        className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200"
+                        className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-electric-500 focus:ring-1 focus:ring-electric-500 transition-all duration-200 font-medium"
                       />
                     </div>
 
@@ -555,7 +555,7 @@ export default function Checkout() {
                         value={cardData.number}
                         onChange={handleCardChange}
                         placeholder="4111 2222 3333 4444"
-                        className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200 font-mono"
+                        className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-electric-500 focus:ring-1 focus:ring-electric-500 transition-all duration-200 font-mono font-medium"
                       />
                     </div>
 
@@ -571,7 +571,7 @@ export default function Checkout() {
                           value={cardData.expiry}
                           onChange={handleCardChange}
                           placeholder="MM/YY"
-                          className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200 font-mono"
+                          className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-electric-500 focus:ring-1 focus:ring-electric-500 transition-all duration-200 font-mono font-medium"
                         />
                       </div>
                       <div className="flex flex-col gap-1.5">
@@ -584,7 +584,7 @@ export default function Checkout() {
                           value={cardData.cvv}
                           onChange={handleCardChange}
                           placeholder="•••"
-                          className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-200 font-mono"
+                          className="bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-2.5 text-sm text-zinc-900 dark:text-white placeholder-zinc-400 focus:outline-none focus:border-electric-500 focus:ring-1 focus:ring-electric-500 transition-all duration-200 font-mono font-medium"
                         />
                       </div>
                     </div>
@@ -692,19 +692,19 @@ export default function Checkout() {
                 {/* CASH ON DELIVERY ANNOUNCEMENT BOX */}
                 {paymentMethod === "cash_on_delivery" && (
                   <div className="border-t border-zinc-200 dark:border-zinc-800 pt-5 animate-fade-in">
-                    <div className="flex gap-4 p-5 rounded-2xl bg-zinc-50 dark:bg-zinc-950/80 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300">
-                      <div className="h-10 w-10 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center flex-shrink-0">
+                    <div className="flex gap-4 p-5 rounded-2xl bg-zinc-50 dark:bg-zinc-950/80 border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-350">
+                      <div className="h-10 w-10 rounded-xl bg-electric-500/10 text-electric-650 dark:text-ice-300 flex items-center justify-center flex-shrink-0">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                       </div>
                       <div className="flex flex-col gap-1 text-sm">
                         <h4 className="font-bold text-zinc-900 dark:text-white">Cash on Delivery Selected</h4>
-                        <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed font-medium">
+                        <p className="text-xs text-zinc-500 dark:text-zinc-405 leading-relaxed font-medium">
                           Your settlement request will process instantly. No advance verification is required. Simply hand the cash to our delivery executive when your parcel arrives.
                         </p>
-                        <span className="text-[10px] text-indigo-600 dark:text-indigo-400 font-bold uppercase tracking-wider mt-1.5 flex items-center gap-1.5">
-                          <span className="h-1.5 w-1.5 rounded-full bg-indigo-500 animate-pulse" />
+                        <span className="text-[10px] text-electric-600 dark:text-electric-400 font-bold uppercase tracking-wider mt-1.5 flex items-center gap-1.5">
+                          <span className="h-1.5 w-1.5 rounded-full bg-electric-500 animate-pulse" />
                           Standard Delivery: 2-3 Business Days
                         </span>
                       </div>
@@ -716,7 +716,7 @@ export default function Checkout() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full mt-4 py-3.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 disabled:from-indigo-600/50 disabled:to-violet-600/50 text-white font-bold text-sm rounded-xl shadow-lg shadow-indigo-600/10 hover:shadow-indigo-600/20 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full mt-4 py-3.5 bg-gradient-to-r from-electric-600 to-electric-650 hover:from-electric-500 hover:to-electric-600 disabled:from-electric-600/50 disabled:to-electric-650/50 text-white font-bold text-sm rounded-xl shadow-lg shadow-electric-600/10 hover:shadow-electric-600/20 active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer border-none"
                 >
                   {isSubmitting ? (
                     <>
@@ -790,7 +790,7 @@ export default function Checkout() {
             <Link
               href="/"
               onClick={confirmOrderAndReset}
-              className="w-full block py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm rounded-xl shadow-lg shadow-indigo-600/10 hover:shadow-indigo-600/20 transition-all duration-200 cursor-pointer active:scale-95"
+              className="w-full block py-3.5 bg-electric-600 hover:bg-electric-500 text-white font-bold text-sm rounded-xl shadow-lg shadow-electric-600/10 hover:shadow-electric-650/20 transition-all duration-200 cursor-pointer active:scale-95 text-center"
             >
               Close & Reset Catalog
             </Link>

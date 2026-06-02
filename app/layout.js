@@ -3,6 +3,8 @@ import "./globals.css";
 import { CartProvider } from "@/app/context/CartContext";
 import Navbar from "@/app/components/Navbar";
 
+import { Suspense } from "react";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -15,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "NexusStore | Premium Tech & Gear",
-  description: "Explore our curated catalog of high-quality electronics, accessories, and home goods powered by MongoDB and Google Gemini.",
+  description: "Welcome to NexusStore, your ultimate online marketplace for high-performance gadgets, premium electronics, accessories, and home gear sourced directly from MongoDB.",
 };
 
 export default function RootLayout({ children }) {
@@ -42,7 +44,11 @@ export default function RootLayout({ children }) {
       </head>
       <body className="min-h-full flex flex-col bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 transition-colors duration-300">
         <CartProvider>
-          <Navbar />
+          <Suspense fallback={
+            <header className="sticky top-0 z-40 w-full border-b border-zinc-900 bg-zinc-950 text-white h-20" />
+          }>
+            <Navbar />
+          </Suspense>
           <div className="flex-1 flex flex-col">{children}</div>
         </CartProvider>
       </body>

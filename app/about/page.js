@@ -42,7 +42,7 @@ export default function About() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
       ),
-      color: "text-indigo-500 bg-indigo-500/10 border-indigo-500/20",
+      color: "text-electric-500 bg-electric-500/10 border-electric-500/20",
     },
   ];
 
@@ -52,8 +52,8 @@ export default function About() {
       role: "Application Framework & Core Routing",
       desc: "Powers server-side rendering (SSR), optimized bundle structures, dynamic API endpoints, and clean client-side hydration for highly interactive interfaces.",
       iconPath: "M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5",
-      glowColor: "group-hover:shadow-indigo-500/10 dark:group-hover:shadow-indigo-500/5 border-indigo-500/30",
-      accent: "text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/30 border-indigo-500/20",
+      glowColor: "group-hover:shadow-electric-500/10 dark:group-hover:shadow-electric-500/5 border-electric-500/30",
+      accent: "text-electric-650 dark:text-electric-400 bg-electric-50 dark:bg-navy-950/30 border-electric-500/20",
     },
     {
       name: "MongoDB Atlas",
@@ -68,8 +68,8 @@ export default function About() {
       role: "Cognitive Search Brain",
       desc: "Applies Large Language Model intelligence to decode raw natural language search inputs. Converts vague user intent into highly optimized query keywords.",
       iconPath: "M9.663 17h4.673M12 3v1m6.364.364l-.707.707M21 12h-1M4 12H3m15.364 6.364l-.707-.707M6.364 6.364l.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z",
-      glowColor: "group-hover:shadow-violet-500/10 dark:group-hover:shadow-violet-500/5 border-violet-500/30",
-      accent: "text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-950/30 border-violet-500/20",
+      glowColor: "group-hover:shadow-electric-500/10 dark:group-hover:shadow-electric-500/5 border-electric-500/30",
+      accent: "text-electric-650 dark:text-ice-400 bg-ice-50 dark:bg-navy-950/30 border-electric-500/20",
     },
   ];
 
@@ -95,29 +95,29 @@ export default function About() {
   ];
 
   return (
-    <div className="flex-1 flex flex-col font-sans selection:bg-indigo-500 selection:text-white transition-colors duration-300">
+    <div className="flex-1 flex flex-col font-sans selection:bg-electric-500 selection:text-white transition-colors duration-300">
       
       {/* Splendid Hero Banner Section */}
-      <section className="relative overflow-hidden py-20 border-b border-zinc-200 dark:border-zinc-900 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-50 dark:from-indigo-950/20 via-white dark:via-zinc-950 to-zinc-50 dark:to-zinc-950">
-        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-purple-500/5 rounded-full blur-3xl pointer-events-none" />
+      <section className="relative overflow-hidden py-20 border-b border-zinc-200 dark:border-navy-900/60 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-ice-100/50 dark:from-navy-900/30 via-white dark:via-navy-950 to-zinc-50/50 dark:to-navy-950">
+        <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-electric-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-ice-400/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             {/* Left Block: Narrative */}
             <div className="lg:col-span-6 flex flex-col items-start text-left">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/10 dark:border-indigo-500/20 mb-4">
-                <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-electric-500/10 text-electric-650 dark:text-ice-300 border border-electric-500/10 dark:border-electric-500/20 mb-4">
+                <span className="w-1.5 h-1.5 rounded-full bg-electric-500 animate-pulse" />
                 Next-Gen E-Commerce
               </span>
               <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white mb-6 leading-tight">
                 Our Journey to <br />
-                <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-navy-800 via-electric-500 to-ice-600 dark:from-navy-200 dark:via-electric-400 dark:to-ice-300 bg-clip-text text-transparent">
                   Intelligent Shopping
                 </span>
               </h1>
-              <p className="text-zinc-600 dark:text-zinc-400 text-sm sm:text-base leading-relaxed mb-6">
+              <p className="text-zinc-650 dark:text-zinc-405 text-sm sm:text-base leading-relaxed mb-6 font-medium">
                 NexusStore was founded with a singular, disruptive vision: shopping should be conversational and immediate. Traditional keyword matches fail customers daily, forcing them to guess product titles. 
                 <br /><br />
                 We built a bridge directly connecting cognitive artificial intelligence with relational MongoDB schemas. The result is a high-fidelity catalog that immediately decodes semantic queries, coupled with a checkout system optimized for secure settlements.
@@ -125,13 +125,13 @@ export default function About() {
               <div className="flex gap-4">
                 <Link
                   href="/"
-                  className="px-5 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs rounded-xl shadow-lg shadow-indigo-600/10 hover:shadow-indigo-600/20 active:scale-95 transition-all duration-200"
+                  className="px-5 py-3 bg-electric-600 hover:bg-electric-500 text-white font-semibold text-xs rounded-xl shadow-lg shadow-electric-600/10 hover:shadow-electric-600/20 active:scale-95 transition-all duration-200"
                 >
                   Explore Catalog
                 </Link>
                 <Link
                   href="/checkout"
-                  className="px-5 py-3 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-800 font-semibold text-xs rounded-xl active:scale-95 transition-all duration-200"
+                  className="px-5 py-3 bg-zinc-100 hover:bg-zinc-200 dark:bg-navy-900 dark:hover:bg-navy-800 text-zinc-900 dark:text-white border border-zinc-200 dark:border-navy-800 font-semibold text-xs rounded-xl active:scale-95 transition-all duration-200"
                 >
                   Secured Checkout
                 </Link>
@@ -140,7 +140,7 @@ export default function About() {
 
             {/* Right Block: Showcase Image from Unsplash */}
             <div className="lg:col-span-6 relative h-[380px] w-full rounded-3xl overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shadow-xl group">
-              <div className="absolute inset-0 bg-indigo-500/5 mix-blend-overlay z-10 pointer-events-none" />
+              <div className="absolute inset-0 bg-electric-500/5 mix-blend-overlay z-10 pointer-events-none" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=compress&cs=tinysrgb&w=800"
@@ -247,7 +247,7 @@ export default function About() {
                 <h3 className="text-base font-extrabold text-zinc-900 dark:text-white leading-tight">
                   {member.name}
                 </h3>
-                <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider mt-1 mb-3">
+                <span className="text-xs font-bold text-electric-600 dark:text-electric-400 uppercase tracking-wider mt-1 mb-3">
                   {member.role}
                 </span>
                 <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed font-medium">
@@ -259,15 +259,15 @@ export default function About() {
         </div>
 
         {/* Interactive Metrics Showcase Banner */}
-        <div className="bg-white dark:bg-zinc-900/30 border border-zinc-200 dark:border-zinc-900 rounded-3xl p-8 sm:p-12 relative overflow-hidden backdrop-blur-sm shadow-sm dark:shadow-none">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-500/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="bg-white dark:bg-navy-900/30 border border-zinc-200 dark:border-navy-900 rounded-3xl p-8 sm:p-12 relative overflow-hidden backdrop-blur-sm shadow-sm dark:shadow-none">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-electric-500/10 rounded-full blur-3xl pointer-events-none" />
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center relative z-10">
             <div>
               <h3 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-white">
                 Intelligent Search, <br />No Keywords Required.
               </h3>
-              <p className="text-zinc-600 dark:text-zinc-400 mt-4 leading-relaxed text-xs sm:text-sm font-medium">
+              <p className="text-zinc-650 dark:text-zinc-400 mt-4 leading-relaxed text-xs sm:text-sm font-medium">
                 Traditional storefront search engines fail when users type expressions. If a customer searches for *"a device to blend fruits and create smoothies"*, keyword matchers return zero results. 
                 <br /><br />
                 NexusStore routes this intent directly through a sanitized **Gemini API model request**. It extracts the root concept—**"Blender"**—and retrieves Mongoose database schemas in milliseconds, producing the perfect product cards.
@@ -284,12 +284,12 @@ export default function About() {
               ].map((metric) => (
                 <div
                   key={metric.label}
-                  className="bg-zinc-50 dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-900 rounded-2xl p-5 flex flex-col shadow-inner dark:shadow-none hover:border-zinc-300 dark:hover:border-zinc-800 transition-colors"
+                  className="bg-zinc-50 dark:bg-navy-950/60 border border-zinc-200 dark:border-navy-900 rounded-2xl p-5 flex flex-col shadow-inner dark:shadow-none hover:border-zinc-300 dark:hover:border-navy-800 transition-colors"
                 >
-                  <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-indigo-600 to-violet-600 dark:from-indigo-400 dark:to-violet-400 bg-clip-text text-transparent">
+                  <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-electric-600 to-electric-500 dark:from-electric-400 dark:to-ice-300 bg-clip-text text-transparent">
                     {metric.val}
                   </span>
-                  <span className="text-xs font-bold text-zinc-800 dark:text-zinc-300 mt-2">
+                  <span className="text-xs font-bold text-zinc-800 dark:text-zinc-350 mt-2">
                     {metric.label}
                   </span>
                   <span className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-1 font-medium">
@@ -304,14 +304,14 @@ export default function About() {
       </main>
 
       {/* Simple Footer */}
-      <footer className="border-t border-zinc-200 dark:border-zinc-900 bg-white dark:bg-zinc-950 py-10 transition-colors duration-300 mt-auto">
+      <footer className="border-t border-zinc-200 dark:border-navy-900 bg-white dark:bg-navy-950 py-10 transition-colors duration-300 mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-zinc-400 dark:text-zinc-500 text-xs font-medium">
             &copy; {new Date().getFullYear()} NexusStore Inc. All rights reserved.
           </div>
           <div className="flex gap-4 text-xs text-zinc-500 font-medium">
-            <Link href="/" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Go to Catalog</Link>
-            <Link href="/checkout" className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">Go to Checkout</Link>
+            <Link href="/" className="hover:text-electric-650 dark:hover:text-ice-400 transition-colors">Go to Catalog</Link>
+            <Link href="/checkout" className="hover:text-electric-650 dark:hover:text-ice-400 transition-colors">Go to Checkout</Link>
           </div>
         </div>
       </footer>
