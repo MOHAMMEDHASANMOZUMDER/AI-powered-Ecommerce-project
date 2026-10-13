@@ -191,7 +191,7 @@ export default function Checkout() {
               Your Cart is Empty
             </h2>
             <p className="text-zinc-500 max-w-sm mb-8 text-sm">
-              Looks like you haven't added any products to your catalog workspace yet. Let's find some premium gear.
+              Looks like you haven&apos;t added any products to your catalog workspace yet. Let&apos;s find some premium gear.
             </p>
             <Link
               href="/"

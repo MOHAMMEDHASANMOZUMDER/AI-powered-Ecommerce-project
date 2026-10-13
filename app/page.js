@@ -48,6 +48,9 @@ function HomeContent() {
           setSearchQuery("");
           const response = await fetch("/api/products");
           const data = await response.json();
+          if (!response.ok) {
+            throw new Error(data.error || "Failed to fetch products");
+          }
           setProducts(data.products || []);
         }
       } catch (error) {
@@ -66,6 +69,9 @@ function HomeContent() {
       if (searchQuery.trim() === "") {
         const response = await fetch("/api/products");
         const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.error || "Failed to fetch products");
+        }
         setProducts(data.products || []);
       } else {
         const response = await fetch("/api/ai_search", {
@@ -336,6 +342,9 @@ function HomeContent() {
                       setLoading(true);
                       const response = await fetch("/api/products");
                       const data = await response.json();
+                      if (!response.ok) {
+                        throw new Error(data.error || "Failed to fetch products");
+                      }
                       setProducts(data.products || []);
                     } catch (e) {
                       console.error(e);

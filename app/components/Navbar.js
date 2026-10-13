@@ -451,7 +451,7 @@ export default function Navbar() {
                     }}
                     className="text-zinc-500 hover:text-electric-500 transition-colors uppercase font-bold text-[10px] tracking-wider mt-2 border-none bg-transparent cursor-pointer"
                   >
-                    Don't have an account? <span className="underline font-black text-zinc-950">CREATE ONE HERE.</span>
+                    Don`t have an account? <span className="underline font-black text-zinc-950">CREATE ONE HERE.</span>
                   </button>
                 </div>
               </form>
