@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useMemo, Suspense } from "react";
 import { useCart } from "@/app/context/CartContext";
+import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 function HomeContent() {
@@ -368,22 +369,28 @@ function HomeContent() {
               const reviewCount = 12 + (product.title.charCodeAt(0) % 50);
 
               return (
-                <div
+                <article
                   key={product._id}
                   className="group relative bg-white dark:bg-navy-900/30 border border-zinc-200 dark:border-navy-900/80 hover:border-electric-500/50 dark:hover:border-electric-500/50 rounded-2xl p-4 flex flex-col h-[400px] transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-electric-500/5 dark:hover:shadow-electric-500/3 cursor-pointer"
                 >
+                  <Link
+                    href={`/products/${product._id}`}
+                    aria-label={`View details for ${product.title}`}
+                    className="absolute inset-0 z-0 rounded-2xl"
+                  />
+
                   {/* Category Indicator Tag */}
-                  <span className="absolute top-6 left-6 z-10 px-2.5 py-1 rounded-lg text-[10px] font-bold tracking-wide uppercase bg-zinc-100/90 dark:bg-navy-950/90 text-electric-600 dark:text-ice-300 border border-zinc-200 dark:border-navy-800/60 backdrop-blur-md">
+                  <span className="pointer-events-none absolute top-6 left-6 z-10 px-2.5 py-1 rounded-lg text-[10px] font-bold tracking-wide uppercase bg-zinc-100/90 dark:bg-navy-950/90 text-electric-600 dark:text-ice-300 border border-zinc-200 dark:border-navy-800/60 backdrop-blur-md">
                     {product.category || "General"}
                   </span>
                   
                   {/* Top Right impulse badge */}
-                  <span className="absolute top-6 right-6 z-10 px-2 py-0.5 rounded bg-rose-500 text-white text-[9px] font-black tracking-widest uppercase animate-pulse shadow-sm">
+                  <span className="pointer-events-none absolute top-6 right-6 z-10 px-2 py-0.5 rounded bg-rose-500 text-white text-[9px] font-black tracking-widest uppercase animate-pulse shadow-sm">
                     {product.title.length % 2 === 0 ? "HOT" : "SALE"}
                   </span>
 
                   {/* Image container */}
-                  <div className="relative w-full h-44 rounded-xl overflow-hidden mb-4 bg-zinc-50 dark:bg-navy-950 border border-zinc-200 dark:border-navy-900 flex items-center justify-center">
+                  <div className="pointer-events-none relative z-10 w-full h-44 rounded-xl overflow-hidden mb-4 bg-zinc-50 dark:bg-navy-950 border border-zinc-200 dark:border-navy-900 flex items-center justify-center">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={product.image || "https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=400"}
@@ -394,7 +401,7 @@ function HomeContent() {
                   </div>
 
                   {/* Rating indicator */}
-                  <div className="flex items-center gap-1.5 mb-2">
+                  <div className="pointer-events-none relative z-10 flex items-center gap-1.5 mb-2">
                     <div className="flex text-amber-500">
                       {Array.from({ length: 5 }).map((_, starIndex) => (
                         <svg
@@ -416,7 +423,7 @@ function HomeContent() {
                   </div>
 
                   {/* Title & Description */}
-                  <div className="flex flex-col mb-auto">
+                  <div className="pointer-events-none relative z-10 flex flex-col mb-auto">
                     <h3 className="font-bold text-base text-zinc-900 dark:text-white group-hover:text-electric-600 dark:group-hover:text-ice-300 transition-colors duration-200 line-clamp-1 leading-snug">
                       {product.title}
                     </h3>
@@ -426,10 +433,10 @@ function HomeContent() {
                   </div>
 
                   {/* Divider */}
-                  <div className="h-px bg-zinc-150 dark:bg-navy-900 w-full my-4" />
+                  <div className="pointer-events-none relative z-10 h-px bg-zinc-150 dark:bg-navy-900 w-full my-4" />
 
                   {/* Price & Actions */}
-                  <div className="flex items-center justify-between mt-auto">
+                  <div className="relative z-10 flex items-center justify-between mt-auto">
                     <div className="flex flex-col">
                       <span className="text-[10px] font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">Price</span>
                       <span className="text-lg font-bold text-zinc-900 dark:text-white">
@@ -438,7 +445,10 @@ function HomeContent() {
                     </div>
 
                     <button
-                      onClick={() => addToCart(product)}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        addToCart(product);
+                      }}
                       className="px-4 py-2 bg-electric-600 hover:bg-electric-500 text-white font-semibold text-xs rounded-xl shadow-lg shadow-electric-600/10 hover:shadow-electric-600/20 active:scale-95 transition-all duration-200 flex items-center gap-1.5 cursor-pointer"
                     >
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -447,7 +457,7 @@ function HomeContent() {
                       Add
                     </button>
                   </div>
-                </div>
+                  </article>
               );
             })}
           </div>
