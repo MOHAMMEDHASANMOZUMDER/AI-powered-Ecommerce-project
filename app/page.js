@@ -242,13 +242,13 @@ function HomeContent() {
       {/* Main Catalog Section */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Sleek Catalog Header with Heading on Left and Sort on Right */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 pb-4 border-b border-zinc-200/60 dark:border-navy-900/60">
+        <div id="catalog-grid" className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8 pb-4 border-b border-zinc-200/60 dark:border-navy-900/60">
           <div>
             <h2 className="text-xl sm:text-2xl font-black text-zinc-900 dark:text-white uppercase tracking-tight">
               {selectedCategory === "All" ? "Explore Catalog" : `Browse ${selectedCategory}`}
             </h2>
             <p className="text-xs text-zinc-400 dark:text-zinc-500 font-medium mt-0.5">
-              Discover authentic products directly from our MongoDB cluster
+              Discover authentic products.
             </p>
           </div>
 
@@ -269,7 +269,7 @@ function HomeContent() {
         </div>
 
         {/* Dynamic Showcase Counter & Filter Breadcrumbs */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 text-sm text-zinc-500 dark:text-zinc-400">
+        <div  className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 text-sm text-zinc-500 dark:text-zinc-400">
           <div>
             Showing <span className="font-semibold text-zinc-900 dark:text-white">{filteredProducts.length}</span> of{" "}
             <span className="font-semibold text-zinc-900 dark:text-white">{products.length}</span> products
@@ -331,7 +331,7 @@ function HomeContent() {
             </div>
             <h3 className="text-lg font-bold text-zinc-900 dark:text-white mb-1">No products found</h3>
             <p className="text-zinc-500 max-w-sm">
-              We couldn't find any products matching your current criteria. Try resetting your search or filters.
+              We couldn&apos;t find any products matching your current criteria. Try resetting your search or filters.
             </p>
             {(searchQuery || selectedCategory !== "All") && (
               <button

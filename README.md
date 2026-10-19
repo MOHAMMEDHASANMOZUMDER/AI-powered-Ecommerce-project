@@ -6,6 +6,15 @@
 **Repository:** [GitHub](https://github.com/MOHAMMEDHASANMOZUMDER/AI-powered-Ecommerce-project)
 
 ---
+## 📸 Screenshots
+<img width="1920" height="1307" alt="screencapture-nexushasandev-netlify-app-2026-10-19-22_25_00" src="https://github.com/user-attachments/assets/70186647-fb6c-4954-922a-6ca3899dab00" />
+<img width="1896" height="898" alt="image" src="https://github.com/user-attachments/assets/f2281db4-5456-4ec6-af96-ce9ba8d7ecdd" />
+<img width="1890" height="901" alt="image" src="https://github.com/user-attachments/assets/922f8db9-856e-488c-a023-975c7ce22844" />
+<img width="1796" height="882" alt="image" src="https://github.com/user-attachments/assets/26cbedc2-b533-4005-8a80-8a0f6ab9ba23" />
+<img width="743" height="680" alt="image" src="https://github.com/user-attachments/assets/5d6a122d-cbea-47b9-bde2-3b0e515f27f0" />
+
+
+
 
 ## 📌 Overview
 
